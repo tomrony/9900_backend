@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Data</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Variant</th>
+                <th>City</th>
+                <th>Province</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for record in data %}
+            <tr>
+                <td>{{ record.variant }}</td>
+                <td>{{ record.city }}</td>
+                <td>{{ record.province }}</td>
+                <td>{{ record.date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

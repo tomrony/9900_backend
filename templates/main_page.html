@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div>
+        <a href="http://127.0.0.1:8000/">Main Page</a>
+    </div>
+    <h1>
+    {% if request.session.username %}
+        <p>
+            Welcome {{ request.session.username }}
+        </p>
+        <p>
+            <a href="/logout/">Log out</a>
+        </p>
+    {% else %}
+        {% if request.COOKIES.username %}
+            <p>
+                Welcome {{ request.COOKIES.username }}
+            </p>
+        {% else %}
+            <ul>
+                <li class="Login and SignUp">
+                    <a class="LoginIcon" id="login" href="/login/" rel="nofollow" _tystat="Login">Login</a>
+                </li>
+                <li class="SignUpIcon">
+                    <a class="SignUp" href="/signup/" rel="nofollow" _tystat="Sign up">Sign up</a>
+                </li>
+            </ul>
+        {% endif %}
+    {% endif %}
+</h1>
+</body>
+</html>
