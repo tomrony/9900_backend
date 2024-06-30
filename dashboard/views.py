@@ -3,11 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from .models import GISAID
 
-# def user_list(request):
-#     users = User.objects.all()
-#     for i in users:
-#         print(i.username, i.password)
-#     return render(request,'user_list.html', {"users":users})
+
 
 
 def data_list(request):
