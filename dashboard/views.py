@@ -13,3 +13,6 @@ def data_list(request):
 
     return render(request, 'data_list.html', {"data": data})
 
+def filter(request):
+    data = GISAID.objects.filter()
+
