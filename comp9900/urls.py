@@ -17,14 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import login,signup,main_page
-from dashboard.views import user_list, data_list
+from heatmap.views import covid_data
+from dashboard.views import covid_data as charts_data
+
 
 urlpatterns = [
     path('', main_page),
     # path('admin/', admin.site.urls),
     path('login/', login, name='login'),
     path('signup/', signup, name='signup'),
-    path('users/', user_list),
-    path('data/', data_list)
+    path('heatmap/', covid_data, name='heatmap'),
+    path('charts/', charts_data, name='charts'),
+
 
 ]
