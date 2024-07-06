@@ -3,10 +3,9 @@ import json
 from django.contrib.auth import authenticate, login as auth_login
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.middleware.csrf import get_token
-from .forms import UserForm
+from .forms import UserForm, LoginForm
 
 
 
@@ -39,15 +38,19 @@ def login(request):
         #     messages.error(request, 'We could not verify the login details you entered.')
         #     return render(request, 'login.html')
         inputs = json.loads(request.body)
-        username = inputs['username']
-        password = inputs['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            auth_login(request, user)
-            request.session['username'] = username
-            return JsonResponse({'success': True})
+        form = LoginForm(data=inputs)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username,password)
+            if user is not None:
+                auth_login(request, user)
+                request.session['username'] = username
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'message': 'Invalid username or password'})
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid username or password'})
+            return JsonResponse({'success': False, 'errors': form.errors})
 
 
 
@@ -77,10 +80,11 @@ def signup(request):
         inputs = json.loads(request.body)
         form = UserForm(inputs)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return JsonResponse({'success': True, 'message': 'Registration successful, please login'})
         else:
-            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+            return JsonResponse({'success': False, 'errors': form.errors})
 
 
 

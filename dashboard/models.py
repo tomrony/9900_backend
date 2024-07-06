@@ -6,8 +6,20 @@ from django.db import models
 #     password = models.CharField(max_length=20)
 
 class CustomUser(AbstractUser):
-    pass
-
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='customuser_set',
+        blank=True,
+        help_text=('The groups this user belongs to. A user will get all permissions granted to each of their groups.'),
+        related_query_name='customuser',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='customuser_set',  
+        blank=True,
+        help_text=('Specific permissions for this user.'),
+        related_query_name='customuser',
+    )
 class Pangolin(models.Model):
     pangolin = models.CharField(max_length=20, unique=True)
 
@@ -19,7 +31,7 @@ class Division(models.Model):
 
 
 class GISAID(models.Model):
-    ei = models.CharField(max_length=20, unique=True)
+    ei = models.CharField(max_length=15, unique=True)
     division = models.ForeignKey(to="Division", to_field="division", null=True, blank=True, on_delete=models.SET_NULL)
     location = models.ForeignKey(to="Location", to_field="location", null=True, blank=True, on_delete=models.SET_NULL)
     pangolin = models.ForeignKey(to="Pangolin", to_field="pangolin", null=True, blank=True, on_delete=models.SET_NULL)
