@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from dashboard.models import GISAID, Division, Location, Pangolin
 
-@csrf_exempt
+# @csrf_exempt
 def covid_data(request):
     if request.method == 'GET':
         year = request.GET.get('year', '2023')

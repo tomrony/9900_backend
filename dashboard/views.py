@@ -17,7 +17,7 @@ from django.http import JsonResponse
 # def filter(request):
 #     data = GISAID.objects.filter()
 
-@csrf_exempt
+# @csrf_exempt
 def covid_data(request):
     if request.method == 'GET':
         year = request.GET.get('year', '2021')

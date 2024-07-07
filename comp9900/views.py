@@ -13,7 +13,7 @@ from .forms import UserForm, LoginForm
 def main_page(request):
     return render(request, 'main_page.html')
 
-@csrf_exempt
+# @csrf_exempt
 def login(request):
     if request.method == 'GET':
         # if request.session.get('username'):
@@ -54,7 +54,7 @@ def login(request):
 
 
 
-@csrf_exempt
+# @csrf_exempt
 def signup(request):
     if request.method == 'GET':
         # return render(request, 'signup.html')
