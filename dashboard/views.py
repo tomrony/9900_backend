@@ -120,13 +120,13 @@ def charts_data(request):
 
         cases_by_date = {
             record['date'].strftime('%Y-%m-%d'): {
-                'total': record['total_cases'],
-                'new': record['total_cases']
+                'total': record['total_cases']
             } for record in gisaid_records
         }
 
+
         response_data = {
-            'cases': cases_by_date,
+            'cases': dict(sorted(cases_by_date.items())),
             'year': year,
             'province': province_name,
         }
