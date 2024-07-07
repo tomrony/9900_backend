@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from .views import login,signup,main_page
 from heatmap.views import covid_data
-from dashboard.views import covid_data as charts_data
+from dashboard.views import charts_data
 
 
 urlpatterns = [
