@@ -49,7 +49,7 @@ def charts_data(request):
             } for record in gisaid_records
         }
 
-        total_new_cases = sum(record['total_cases'] for record in gisaid_records)
+        total_new_cases = sum(record['new_cases'] for record in gisaid_records)
 
 
         response_data = {
