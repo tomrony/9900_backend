@@ -22,6 +22,7 @@ class CustomUser(AbstractUser):
     )
 class Pangolin(models.Model):
     pangolin = models.CharField(max_length=100, unique=True)
+    label = models.CharField(max_length=100, blank=True, null=True)
 
 class Location(models.Model):
     location = models.CharField(max_length=100, unique=True)
@@ -32,9 +33,9 @@ class Division(models.Model):
 
 class GISAID(models.Model):
     ei = models.CharField(max_length=100, unique=True)
-    division = models.ForeignKey(to="Division", to_field="division", null=True, blank=True, on_delete=models.SET_NULL)
-    location = models.ForeignKey(to="Location", to_field="location", null=True, blank=True, on_delete=models.SET_NULL)
-    pangolin = models.ForeignKey(to="Pangolin", to_field="pangolin", null=True, blank=True, on_delete=models.SET_NULL)
+    division = models.ForeignKey(to="Division", null=True, blank=True, on_delete=models.SET_NULL)
+    location = models.ForeignKey(to="Location", null=True, blank=True, on_delete=models.SET_NULL)
+    pangolin = models.ForeignKey(to="Pangolin", null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateField()
 
 
