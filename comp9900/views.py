@@ -18,13 +18,14 @@ def login(request):
         csrf_token = get_token(request)
         return JsonResponse({'csrfToken': csrf_token})
 
+    # User login request
     elif request.method == 'POST':
         inputs = json.loads(request.body)
-        form = LoginForm(data=inputs)
+        form = LoginForm(data=inputs) # Extract inputs using form
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(username,password)
+            user = authenticate(username,password) # Varify the login information
             if user is not None:
                 auth_login(request, user)
                 request.session['username'] = username
@@ -41,12 +42,12 @@ def signup(request):
     if request.method == 'GET':
         csrf_token = get_token(request)
         return JsonResponse({'csrfToken': csrf_token})
-
+    # User sign-up request
     elif request.method == 'POST':
         inputs = json.loads(request.body)
         form = UserForm(inputs)
         if form.is_valid():
-            user = form.save()
+            user = form.save() # Save the username and password to the database
             login(request, user)
             return JsonResponse({'success': True, 'message': 'Registration successful, please login'})
         else:

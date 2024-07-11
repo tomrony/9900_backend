@@ -87,6 +87,7 @@ WSGI_APPLICATION = 'comp9900.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Use mysql as major database
 DATABASES = {
 
     'default': {
