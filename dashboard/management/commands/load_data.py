@@ -1,3 +1,4 @@
+import os
 import csv
 from django.core.management.base import BaseCommand
 from dashboard.models import Pangolin, Location, Division, GISAID
@@ -5,7 +6,9 @@ from datetime import datetime
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        csv_file_path = '/Users/tristam/PycharmProjects/comp9900/dashboard/management/commands/data/tsv/pp_data.csv'
+        # csv_file_path = 'dashboard/management/commands/data/tsv/pp_data.csv'
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_file_path = os.path.join(base_dir, 'data', 'tsv', 'updated_pp_data.csv')
 
         with open(csv_file_path, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -15,6 +18,11 @@ class Command(BaseCommand):
                 division, _ = Division.objects.get_or_create(division=row['division'])
                 location, _ = Location.objects.get_or_create(location=row['location'])
                 pangolin, _ = Pangolin.objects.get_or_create(pangolin=row['pangolin_lineage'])
+
+                who_label = row.get('who_label')
+                if who_label:
+                    pangolin.label = who_label
+                    pangolin.save()
 
                 date_str = row['date']
                 if len(date_str) == 4:
